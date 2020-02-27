@@ -1,26 +1,139 @@
 <template>
   <div>
-      <header class="header conteiner_ajuste">
-            <div>
-               tela de Equipes :)
+
+    <cabecario></cabecario>
+    <main class="main">
+      <div class="container">
+        <h6 class="display-4 text-center">Equipes</h6>
+        <section class="card">
+            <div class="card-body">
+
+                <label class="label--main" for="coordenador">Nome:</label>
+                <div>
+                    <input class="form-control" v-model="nome" type="text" name="nome" placeholder="Nome da equipe" >
+                </div>
+
+                <label class="label--main" for="coordenador">Coordenador:</label>
+                <div>
+                    <input class="form-control" v-model="coordenador" type="text" name="coordenador" placeholder="Coordenador da equipe" >
+                </div>
+                
+                <label class="label--main" for="Dev 1">Dev 1:</label>
+                <div>
+                    <input class="form-control" v-model="dev1" type="text" name="dev1" placeholder="1º dev da equipe" >
+                </div>
+                
+                <label class="label--main" for="Dev 2">Dev 2:</label>
+
+                <div>
+                    <input class="form-control" v-model="dev2" type="text" name="dev2" placeholder="2º dev da equipe" >
+                </div>
+
+                <label class="label--main" for="Dev 3">Dev 3:</label>
+                <div>
+                    <input class="form-control" v-model="dev3" v-on:keyup.enter="addEquipe(equipe)" type="text" name="dev3" placeholder="3º dev da equipe" >
+                </div>
+
+                <button class="btn btn-info pl-4 pr-4 mt-4" v-on:click="addEquipe(equipe)" >Inseir</button>
+                
             </div>
-               
-            <div>
+                
+            
+        </section>
+
+        <section class="mt-4"> 
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h6 class="text-capitalize font-weight-bold">coordenador</h6>
+                    <h6 class="text-capitalize font-weight-light">dev 1</h6>
+                    <h6 class="text-capitalize font-weight-light">dev 2</h6>
+                    <h6 class="text-capitalize font-weight-light">dev 3</h6>
+                </div>
+            </div>
+
+              <div class="card mt-4">
+                <div class="card-body">
+                    <h6 class="text-capitalize font-weight-bold">coordenador</h6>
+                    <h6 class="text-capitalize font-weight-light">dev 1</h6>
+                    <h6 class="text-capitalize font-weight-light">dev 2</h6>
+                    <h6 class="text-capitalize font-weight-light">dev 3</h6>
+                </div>
+            </div>
               
-            </div>
-    </header>
+           
+        </section>
+      </div>
+       
+    </main>
+
+    <rodaPe></rodaPe>
   </div>
 </template>
 
 <script>
-
-// import tarefa from './Tarefa'
+import 'bootstrap/dist/css/bootstrap.css'
+import cabecario from '../components/Header'
+import rodaPe from '../components/Footer'
 export default {
-  name: 'equipes'
+  name: 'equipes',
+  data () {
+     return{
+            nome: '',
+            coordenador: '',
+            dev1: '',
+            dev2: '',
+            dev3: '',
+
+            equipes: []
+     } 
+  },
+  components: {
+      cabecario,
+      rodaPe
+  },
+  methods:{
+      addEquipe(){
+          let equipe = {
+              'nome': this.nome,
+              'coordenador': this.coordenador,
+              'dev1': this.dev1,
+              'dev2': this.dev2,
+              'dev3': this.dev3
+          }
+          
+          this.equipes.push(equipe)
+          this.limparFormulario()
+
+      },
+
+      limparFormulario(){
+          this.nome = '',
+          this.coordenador = '',
+          this.dev1 = '',
+          this.dev2 = '',
+          this.dev3 = ''        
+
+      }
+  }
 }
 </script>
   
 <style scoped>
+
+.label--main{
+    display: block;
+    font-family: 'Roboto', 'sans-serif';
+    font-size: 12px;
+    padding-top: 6px;
+    margin-top: 5px;
+    color: #6C757D;
+
+}
+.main{
+  margin: 10px;
+  padding: 20px;
+  padding-bottom: 30px;
+}
 
 .conteiner_ajuste{
     display: flex;
@@ -34,6 +147,7 @@ export default {
     
     background: #00428F;
     margin: -8px;
+    margin-top: -16px
 
 }
 .header-titulo{
@@ -102,5 +216,7 @@ export default {
     color: #00428F;
     border: solid 1px #00428F;
 }
+
+
 
 </style>

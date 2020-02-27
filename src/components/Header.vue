@@ -1,36 +1,28 @@
 <template>
   <div>
-    <cabecario></cabecario>
-
-    <main class="main ">
-      <div class="container">
-        <h6 class="display-4 text-center">Tarefas</h6>
-      </div>
-    </main>
-
-    <rodaPe></rodaPe>
-
+   <header class="header conteiner_ajuste">
+            <div>
+                <div class=" header-titulo">Gerenciador de </div>
+                <div class=" header-subtitulo">Atividades</div>
+            </div>
+            
+            <nav>
+                <router-link to="/tarefas" class = "link-tarefa" >Tarefas</router-link>
+                <router-link to="/" class = "link-tarefa" >Equipes</router-link>
+            </nav> 
+    </header>
   </div>
 </template>
 
 <script>
 import 'bootstrap/dist/css/bootstrap.css'
-import cabecario from '../components/Header'
-import rodaPe from '../components/Footer'
 export default {
-  name: 'tarefas',
-  components:{
-    cabecario,
-    rodaPe
-  }
+  name: 'header'
 }
 </script>
 
 <style scoped>
-.main{
-  margin: 10px;
-  padding: 20px;
-}
+
 .conteiner_ajuste{
     display: flex;
     flex-wrap: wrap;
