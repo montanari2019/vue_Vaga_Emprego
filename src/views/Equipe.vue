@@ -16,11 +16,7 @@
 
 // import tarefa from './Tarefa'
 export default {
-  name: 'equipes',
-
-  // components:{
-  //   tarefa
-  // },
+  name: 'equipes'
 }
 </script>
   

@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'tarefas',
+  name: 'tarefas'
 }
 </script>
 
