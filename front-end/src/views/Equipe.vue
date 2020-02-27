@@ -3,7 +3,7 @@
     <cabecario></cabecario>
     <main class="main">
       <div class="container">
-        <h6 class="display-4 text-center">Equipes</h6>
+        <h6 class="display-4 text-center pb-4">Equipes</h6>
         <section class="card">
           <div class="card-body">
             <label class="label--main" for="coordenador">Nome:</label>
@@ -63,9 +63,10 @@
               />
             </div>
 
-            <button class="btn btn-info pl-4 pr-4 mt-4" v-on:click="addEquipe(equipe), limparFormulario(),listEquipe()">Inseir</button>
-            <br>
-            <button class="btn btn-success mt-4" v-on:click="listEquipe()">Sincronizar</button>
+           <div class="d-flex justify-content-between">
+              <button class="btn btn-success mt-4" v-on:click="listEquipe()">Sincronizar</button>
+              <button class="btn btn-info pl-4 pr-4 mt-4" v-on:click="addEquipe(equipe), limparFormulario(),listEquipe()">Inseir</button>
+            </div>
           </div>
         </section>
 
@@ -150,7 +151,7 @@ export default {
         .then(res => res.json())
         .catch(erro => console.log(erro))
     },
-    
+
     listEquipe(){
       this.getEquipe()
          .then((res) =>{
