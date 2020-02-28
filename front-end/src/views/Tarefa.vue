@@ -10,25 +10,28 @@
           <form class="card">
             <div class="card-body">
               <label class="label--main" for="titulo">Título:</label>
-              <input class="form-control" v-model="titulo" type="text" placeholder="Digite o titulo da tarefa">
+              <input class="form-control" required v-model="titulo" type="text" placeholder="Digite o titulo da tarefa">
 
               <label class="label--main" for="descricao">Descrição:</label>
-              <textarea class="form-control" v-model="descricao" id="exampleFormControlTextarea1" placeholder="Digite a descrição da tarefa" rows="6"></textarea>
+              <textarea class="form-control" required v-model="descricao" id="exampleFormControlTextarea1" placeholder="Digite a descrição da tarefa" rows="6"></textarea>
 
              
-                  <label class="label--main" for="selectEquipe">Selecione a Equipe:</label>
-                   <select class="form-control" v-model="equipe_responsavel" v-on:change="carregarMembro()">
+                  <label class="label--main" for="selectEquipe">Selecione a Equipe: {{equipe_responsavel}}</label>
+                   <select class="form-control" required v-model="equipe_responsavel" v-on:change="carregarMembro(equipe_responsavel)">
                     <option v-for="(equipe, id) in equipes" v-bind:key="id">{{ equipe.nome }}</option>
                   </select>
 
-                  <label class="label--main" for="selectMembro">Selecione o Membro:</label>
-                  <select class="form-control">
-                    <option>ikaro</option>
-                  </select>
+                    <label class="label--main" for="selectMembro">Selecione o Membro: {{responsavel}}</label>
+                    <select class="form-control" v-model="responsavel" v-for="(equipe, id) in equipeSelect" v-bind:key="id" required>
+                      <option>{{equipe.coordenador}}</option>
+                      <option>{{equipe.dev1}}</option>
+                      <option>{{equipe.dev2}}</option>
+                      <option>{{equipe.dev3}}</option>
+                    </select>
 
                   <div class="d-flex justify-content-between">
                     <button class="btn btn-success mt-4" v-on:click="getTarefa()">Sincronizar</button>
-                    <button class="btn btn-info pl-4 pr-4 mt-4">Inserir</button>
+                    <button class="btn btn-info pl-4 pr-4 mt-4" v-on:click="addTarefa(), limparFormulario()">Inserir</button>
                   </div>
               </div>
            
@@ -43,7 +46,7 @@
                   <h6 class="font-weight-bold">{{tarefa.responsavel}}</h6>
                   <h6 class="font-weight-">{{tarefa.equipe_responsavel}}</h6>
                   <br>
-                  <button class="btn btn-danger p-2 pr-4 pl-4 fa fa-trash" ></button>
+                  <button class="btn btn-danger p-2 pr-4 pl-4 fa fa-trash" v-on:click="deleteTarefa(tarefa.id)" ></button>
                 </div>
               </div>
             </div>
@@ -77,11 +80,45 @@ export default {
 
       tarefas: [],
       equipes: [],
+      equipeSelect: []
+      
     }
   },
   methods: {
     addTarefa(){
+        const tarefa = {
+          'titulo': this.titulo,
+          'descricao': this.descricao,
+          'responsavel': this.responsavel,
+          'equipe_responsavel': this.equipe_responsavel,
+          'id_equipe': this.equipeSelect[0].id
+        }
 
+        const options = {
+          method: 'POST',
+          body: JSON.stringify(tarefa),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+
+        return fetch('http://localhost:3010/api/v1/tarefas', options)
+          .then(res => res.json())
+          .then(() => {
+            this.getTarefa()
+          })
+          .catch(erro => console.log(erro))
+    },
+
+    deleteTarefa(id){
+       let res = confirm("Deseja deletar essa tarefa?");
+      if (res == true) {
+        fetch(`http://localhost:3010/api/v1/tarefas/${id}`, {method: 'DELETE'})
+        .then(res => res.json())
+        .catch(erro => console.log(erro))
+        
+      }
+      this.getTarefa()
     },
     
     // Buscando equipes para popular o select
@@ -96,14 +133,10 @@ export default {
 
     // Carregando membros
     carregarMembro(nome){
-      let equipeList = this.equipes
 
-      let equipeSelect = equipeList.filter((equipe) => {
+      this.equipeSelect = this.equipes.filter((equipe) =>{
           return equipe.nome == nome
       })
-
-      return equipeSelect
-
     },
 
     getTarefa(){
@@ -113,7 +146,14 @@ export default {
         this.tarefas = res
       })
       .catch(erro => console.log(erro))
-    }
+    },
+
+    limparFormulario(){
+      (this.titulo) = '',
+      (this.descricao) = '',
+      (this.responsavel) = '',
+      (this.equipe_responsavel) = ''
+    },
   },
 
   created (){

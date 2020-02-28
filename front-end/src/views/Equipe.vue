@@ -21,6 +21,7 @@
             <div>
               <input
                 class="form-control"
+                required
                 v-model="coordenador"
                 type="text"
                 name="coordenador"
@@ -32,6 +33,7 @@
             <div>
               <input
                 class="form-control"
+                required
                 v-model="dev1"
                 type="text"
                 name="dev1"
@@ -44,6 +46,7 @@
             <div>
               <input
                 class="form-control"
+                required
                 v-model="dev2"
                 type="text"
                 name="dev2"
@@ -55,8 +58,9 @@
             <div>
               <input
                 class="form-control"
+                required
                 v-model="dev3"
-                v-on:keyup.enter="addEquipe(equipe), limparFormulario(), listEquipe()"
+                v-on:keyup.enter="addEquipe(equipe), limparFormulario(), getEquipe()"
                 type="text"
                 name="dev3"
                 placeholder="3º dev da equipe"
@@ -64,8 +68,8 @@
             </div>
 
            <div class="d-flex justify-content-between">
-              <button class="btn btn-success mt-4" v-on:click="listEquipe()">Sincronizar</button>
-              <button class="btn btn-info pl-4 pr-4 mt-4" v-on:click="addEquipe(equipe), limparFormulario(),listEquipe()">Inseir</button>
+              <button class="btn btn-success mt-4" v-on:click="getEquipe()">Sincronizar</button>
+              <button class="btn btn-info pl-4 pr-4 mt-4" v-on:click="addEquipe(equipe), limparFormulario(), getEquipe()">Inseir</button>
             </div>
           </div>
         </section>
@@ -102,13 +106,14 @@ export default {
   name: "equipes",
   data() {
     return {
+
       nome: "",
       coordenador: "",
       dev1: "",
       dev2: "",
       dev3: "",
-
       equipes: []
+      
     };
   },
   components: {
@@ -116,8 +121,9 @@ export default {
     rodaPe
   },
   methods: {
+
     addEquipe() {
-      const data = {
+      const equipe = {
         'nome': this.nome,
         'coordenador': this.coordenador,
         'dev1': this.dev1,
@@ -127,49 +133,45 @@ export default {
 
        const opitions = {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify(equipe),
         headers: {
             'Content-Type': 'application/json'
         }
         
     }
-
-    console.log('Equipe inserida')
       return fetch('http://localhost:3010/api/v1/equipes', opitions)
           .then(res => res.json())
           .then(() =>{
-            this.listEquipe()
+            this.getEquipe()
           }) 
           .catch(erro => console.log(erro))
-          
-    
-    
+
     },
 
     getEquipe(){
+
          return fetch('http://localhost:3010/api/v1/equipes')
         .then(res => res.json())
-        .catch(erro => console.log(erro))
-    },
-
-    listEquipe(){
-      this.getEquipe()
          .then((res) =>{
           this.equipes = res
         })
+        .catch(erro => console.log(erro))
     },
 
     deleteEquipe(id) {
+
       let res = confirm("Deseja deletar essa equipe?");
       if (res == true) {
         fetch(`http://localhost:3010/api/v1/equipes/${id}`, {method: 'DELETE'})
         .then(res => res.json())
         .catch(erro => console.log(erro))
-        this.listEquipe()
+        this.getEquipe()
       }
       
     },
+
     limparFormulario() {
+
       (this.nome = ""),
         (this.coordenador = ""),
         (this.dev1 = ""),
@@ -177,8 +179,8 @@ export default {
         (this.dev3 = "");
     },
   },
-  creatad (){
-    
+  created (){
+     this.getEquipe()
   }
 
   
