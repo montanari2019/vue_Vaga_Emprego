@@ -2,7 +2,7 @@
 
 ## Project setup
 ```
-Para executar todos os programas aqui dipostos é necessário ter instalado o npm 6
+Para executar todos os programas aqui dipostos é necessário ter instalado o Npm 6
 ```
 # Api
 
