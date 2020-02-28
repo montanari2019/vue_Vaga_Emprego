@@ -24,10 +24,14 @@ Para rodar a API use o comando npm run start.
 ```
 Para executar o front end em Vue.js é necessário a versão 4 do vue/cli
 
+com o comando (npm install -g @vue/cli @vue/cli-service-global) ou (yarn global add @vue/cli @vue/cli-service-global) para instalar o vue/cli
+
 assim que instalado o vue/cli, abra a pasta front-end e rode o comando (npm install) para instalar todas as dependências necessárias
+
+caso não funcione tente instalar de forma global (npm install -g)
 
 após isso rode o comando npm run serve para iniciar o front-end
 
-após isso ele estará disponível na porta 8080
+após isso ele estará disponível na porta 8080 caso a mesma não esteja sendo ocupada
 ```
 
