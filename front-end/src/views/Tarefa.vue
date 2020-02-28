@@ -115,10 +115,13 @@ export default {
       if (res == true) {
         fetch(`http://localhost:3010/api/v1/tarefas/${id}`, {method: 'DELETE'})
         .then(res => res.json())
+        .then(() =>{
+          this.getTarefa()
+        })
         .catch(erro => console.log(erro))
         
       }
-      this.getTarefa()
+      
     },
     
     // Buscando equipes para popular o select

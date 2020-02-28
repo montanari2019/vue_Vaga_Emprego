@@ -69,7 +69,7 @@
 
            <div class="d-flex justify-content-between">
               <button class="btn btn-success mt-4" v-on:click="getEquipe()">Sincronizar</button>
-              <button class="btn btn-info pl-4 pr-4 mt-4" v-on:click="addEquipe(equipe), limparFormulario(), getEquipe()">Inseir</button>
+              <button class="btn btn-info pl-4 pr-4 mt-4" v-on:click="addEquipe(equipe), limparFormulario(), getEquipe()">Inserir</button>
             </div>
           </div>
         </section>
@@ -164,9 +164,12 @@ export default {
       if (res == true) {
         fetch(`http://localhost:3010/api/v1/equipes/${id}`, {method: 'DELETE'})
         .then(res => res.json())
+        .then(() =>{
+          this.getEquipe()
+        })
         .catch(erro => console.log(erro))
-        this.getEquipe()
       }
+      
       
     },
 
