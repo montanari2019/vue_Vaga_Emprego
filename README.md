@@ -1,4 +1,4 @@
-# vue_vaga_emprego
+# vue_framework
 
 ## Project setup
 ```
