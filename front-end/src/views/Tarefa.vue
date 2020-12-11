@@ -37,7 +37,7 @@
            
           </form>
 
-          <section class="conteiner_main-tarefa" v-for="(tarefa, id) in tarefas" v-bind:key="id">
+          <section class="" v-for="(tarefa, id) in tarefas" v-bind:key="id">
             <div class="col-sm-12">
               <div class="card mt-4">
                 <div class="card-body">
@@ -46,7 +46,10 @@
                   <h6 class="font-weight-bold">{{tarefa.responsavel}}</h6>
                   <h6 class="font-weight-">{{tarefa.equipe_responsavel}}</h6>
                   <br>
-                  <button class="btn btn-danger p-2 pr-4 pl-4 fa fa-trash" v-on:click="deleteTarefa(tarefa.id)" ></button>
+                  <div class="container-btn_alterar">
+                    <button class="btn btn-danger p-2 pr-4 pl-4 fa fa-trash" v-on:click="deleteTarefa(tarefa.id)" ></button>
+                   
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,7 +105,7 @@ export default {
           }
         }
 
-        return fetch('http://localhost:3010/api/v1/tarefas', options)
+        return fetch('https://api-frameworks.herokuapp.com/api/v1/tarefas', options)
           .then(res => res.json())
           .then(() => {
             this.getTarefa()
@@ -113,7 +116,7 @@ export default {
     deleteTarefa(id){
        let res = confirm("Deseja deletar essa tarefa?");
       if (res == true) {
-        fetch(`http://localhost:3010/api/v1/tarefas/${id}`, {method: 'DELETE'})
+        fetch(`https://api-frameworks.herokuapp.com/api/v1/tarefas/${id}`, {method: 'DELETE'})
         .then(res => res.json())
         .then(() =>{
           this.getTarefa()
@@ -126,7 +129,7 @@ export default {
     
     // Buscando equipes para popular o select
    getEquipe(){
-         return fetch('http://localhost:3010/api/v1/equipes')
+         return fetch('https://api-frameworks.herokuapp.com/api/v1/equipes')
         .then(res => res.json())
         .then((res) =>{
         this.equipes = res
@@ -143,7 +146,7 @@ export default {
     },
 
     getTarefa(){
-      return fetch('http://localhost:3010/api/v1/tarefas')
+      return fetch('https://api-frameworks.herokuapp.com/api/v1/tarefas')
       .then(res => res.json())
       .then((res) =>{
         this.tarefas = res
@@ -173,6 +176,11 @@ export default {
 .span-badge{
   font-size: 12px;
 }
+.container-btnAlterar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
 
 .conteiner_main-tarefa{
     display: flex;
@@ -186,6 +194,9 @@ export default {
         justify-content: space-evenly;
     }
 
+}
+.btn_alterar {
+  margin-right: 10px;
 }
 .label--main {
   display: block;

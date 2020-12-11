@@ -83,8 +83,9 @@
               <h6 class="text-capitalize font-weight-light">{{equipe.dev2}}</h6>
               <h6 class="text-capitalize font-weight-light">{{equipe.dev3}}</h6>
               <div>
-                <button class="btn btn-danger" v-on:click="deleteEquipe(equipe.id)">
+                <button class="btn btn-danger pr-4 pl-4" v-on:click="deleteEquipe(equipe.id)">
                   <span class="fa fa-trash"></span>
+                </button>
                 </button>
               </div>
             </div>
@@ -139,7 +140,7 @@ export default {
         }
         
     }
-      return fetch('http://localhost:3010/api/v1/equipes', opitions)
+      return fetch('https://api-frameworks.herokuapp.com/api/v1/equipes', opitions)
           .then(res => res.json())
           .then(() =>{
             this.getEquipe()
@@ -150,7 +151,7 @@ export default {
 
     getEquipe(){
 
-         return fetch('http://localhost:3010/api/v1/equipes')
+         return fetch('https://api-frameworks.herokuapp.com/api/v1/equipes')
         .then(res => res.json())
          .then((res) =>{
           this.equipes = res
@@ -162,7 +163,7 @@ export default {
 
       let res = confirm("Deseja deletar essa equipe?");
       if (res == true) {
-        fetch(`http://localhost:3010/api/v1/equipes/${id}`, {method: 'DELETE'})
+        fetch(`https://api-frameworks.herokuapp.com/api/v1/equipes/${id}`, {method: 'DELETE'})
         .then(res => res.json())
         .then(() =>{
           this.getEquipe()
